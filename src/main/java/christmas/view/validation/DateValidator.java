@@ -9,7 +9,7 @@ public class DateValidator implements InputValidator<String> {
 
     @Override
     public void validate(String input) {
-
+        isValidRange(isDigit(input));
     }
 
     private int isDigit(String input) {
