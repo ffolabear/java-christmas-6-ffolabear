@@ -3,6 +3,7 @@ package christmas.model.domain.constant;
 import static christmas.model.domain.constant.Type.*;
 
 import christmas.model.domain.constant.Type;
+import java.util.Arrays;
 
 public enum Menu {
 
@@ -28,6 +29,11 @@ public enum Menu {
         this.name = name;
         this.price = price;
         this.type = type;
+    }
+
+    public static boolean isExistMenu(String menu) {
+        return Arrays.stream(Menu.values())
+                .anyMatch(m -> m.getName().equals(menu));
     }
 
     public String getName() {
