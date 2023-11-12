@@ -3,26 +3,26 @@ package christmas.view;
 import christmas.view.validation.InputValidator;
 import java.util.function.Supplier;
 
-public class InputView<T> {
+public class InputView {
 
-    private final InputUtil<T> inputUtil;
+    private final InputUtil inputUtil;
     private final InputValidator<String> inputValidator;
 
-    public InputView(InputUtil<T> inputUtil, InputValidator<String> validator) {
+    public InputView(InputUtil inputUtil, InputValidator<String> validator) {
         this.inputUtil = inputUtil;
         this.inputValidator = validator;
     }
 
-    public InputResult<T> read() {
+    public InputResult read() {
         System.out.println("입력하세요.");
         return repeat(inputUtil::read, inputValidator);
     }
 
-    private InputResult<T> repeat(Supplier<T> input, InputValidator<String> validator) {
+    private InputResult repeat(Supplier<String> input, InputValidator<String> validator) {
         try {
-            T inputData = input.get();
-            validator.validate((String) inputData);
-            return new InputResult<>(inputData);
+            String inputData = input.get();
+            validator.validate(inputData);
+            return new InputResult(inputData);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return repeat(input, validator);
