@@ -1,8 +1,12 @@
 package christmas.model.domain.constant;
 
-import static christmas.model.domain.constant.Type.*;
+import static christmas.model.domain.constant.Type.APPETIZER;
+import static christmas.model.domain.constant.Type.BEVERAGE;
+import static christmas.model.domain.constant.Type.DESSERT;
+import static christmas.model.domain.constant.Type.MAIN;
 
-import christmas.model.domain.constant.Type;
+import christmas.model.exception.MenuNotFindException;
+import christmas.view.constant.ErrorMessage;
 import java.util.Arrays;
 
 public enum Menu {
@@ -34,6 +38,13 @@ public enum Menu {
     public static boolean isExistMenu(String menu) {
         return Arrays.stream(Menu.values())
                 .anyMatch(m -> m.getName().equals(menu));
+    }
+
+    public static Menu getMenuByName(String menuName) {
+        return Arrays.stream(Menu.values())
+                .filter(menu -> menu.getName().equals(menuName))
+                .findFirst()
+                .orElseThrow(() -> new MenuNotFindException(ErrorMessage.MENU_NOT_FOUND.getError()));
     }
 
     public String getName() {
