@@ -1,4 +1,4 @@
-package christmas.view.constant;
+package christmas.view.validation;
 
 import camp.nextstep.edu.missionutils.Console;
 import christmas.view.InputUtil;
