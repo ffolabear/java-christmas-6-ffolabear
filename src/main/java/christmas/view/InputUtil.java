@@ -1,7 +1,7 @@
 package christmas.view;
 
-public interface InputUtil {
+public interface InputUtil<T> {
 
-    String read();
+    T read();
 
 }

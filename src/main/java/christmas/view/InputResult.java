@@ -1,5 +1,5 @@
 package christmas.view;
 
-public record InputResult(Object data) {
+public record InputResult<T>(T data) {
 
 }

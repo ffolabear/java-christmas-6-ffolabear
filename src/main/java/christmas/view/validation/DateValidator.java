@@ -1,15 +1,22 @@
 package christmas.view.validation;
 
+import christmas.view.Mapper;
 import christmas.view.constant.ErrorMessage;
+import java.time.LocalDate;
 
-public class DateValidator implements InputValidator<String> {
+public class DateValidator implements InputValidator<String, LocalDate> {
+
+    private static final int YEAR = 2023;
+    private static final int MONTH = 12;
 
     private final int START_DATE = 1;
     private final int END_DATE = 31;
 
     @Override
-    public void validate(String input) {
-        isValidRange(isDigit(input));
+    public LocalDate validate(String input) {
+        int inputAsInt = isDigit(input);
+        isValidRange(inputAsInt);
+        return Mapper.toLocalDate(inputAsInt);
     }
 
     private int isDigit(String input) {
@@ -25,5 +32,4 @@ public class DateValidator implements InputValidator<String> {
             throw new IllegalArgumentException(ErrorMessage.INVALID_DATE.getError());
         }
     }
-
 }
