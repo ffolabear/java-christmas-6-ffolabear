@@ -1,7 +1,6 @@
 package christmas.view.validation;
 
-public interface InputValidator<T> {
+public interface InputValidator<T, R> {
 
-    void validate(T input);
-
+    R validate(T input);
 }
