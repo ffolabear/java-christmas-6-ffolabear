@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class MenuValidator implements InputValidator<String, EnumMap<Menu, Integer>> {
+public class MenuValidator implements InputValidator<String, EnumMap<Menu, List<Integer>>> {
 
     @Override
-    public EnumMap<Menu, Integer> validate(String input) {
+    public EnumMap<Menu, List<Integer>> validate(String input) {
         List<String> rawMenus = Arrays.stream(input.split(",")).toList();
         EnumMap<Menu, Integer> orderedMenu = new EnumMap<>(Menu.class);
         for (String rawMenu : rawMenus) {
@@ -21,7 +21,7 @@ public class MenuValidator implements InputValidator<String, EnumMap<Menu, Integ
             orderedMenu.put(Menu.getMenuByName(splitMenu[0]), Integer.valueOf(splitMenu[1]));
         }
         isDuplicateMenuExist(rawMenus, orderedMenu);
-        EnumMap<Menu, Integer> menuData = Mapper.toMenuData(input);
+        EnumMap<Menu, List<Integer>> menuData = Mapper.toMenuData(input);
         isOrderOnlyBeverage(menuData);
         return Mapper.toMenuData(input);
     }
@@ -40,8 +40,8 @@ public class MenuValidator implements InputValidator<String, EnumMap<Menu, Integ
         }
     }
 
-    private void isOrderOnlyBeverage(EnumMap<Menu, Integer> menuData) {
-        Map<Menu, Integer> beverageMenuData = menuData.entrySet().stream()
+    private void isOrderOnlyBeverage(EnumMap<Menu, List<Integer>> menuData) {
+        Map<Menu, List<Integer>> beverageMenuData = menuData.entrySet().stream()
                 .filter(entry -> entry.getKey().getType() == Type.BEVERAGE)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         if (beverageMenuData.size() == menuData.size()) {

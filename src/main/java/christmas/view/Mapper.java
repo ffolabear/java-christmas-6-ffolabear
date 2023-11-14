@@ -17,23 +17,25 @@ public class Mapper {
         return LocalDate.of(YEAR, MONTH, dateInput);
     }
 
-    public static EnumMap<Menu, Integer> toMenuData(String menuInput) {
+    public static EnumMap<Menu, List<Integer>> toMenuData(String menuInput) {
         List<String> rawMenus = Arrays.stream(menuInput.split(",")).toList();
-        EnumMap<Menu, Integer> orderedMenu = new EnumMap<>(Menu.class);
+        EnumMap<Menu, List<Integer>> orderedMenu = new EnumMap<>(Menu.class);
         for (String rawMenu : rawMenus) {
             String[] splitMenu = rawMenu.split("-");
-            orderedMenu.put(Menu.getMenuByName(splitMenu[0]), Integer.valueOf(splitMenu[0]));
+            Menu menu = Menu.getMenuByName(splitMenu[0]);
+            int quantity = Integer.parseInt(splitMenu[1]);
+            orderedMenu.put(Menu.getMenuByName(splitMenu[0]), Arrays.asList(quantity, quantity * menu.getPrice()));
         }
         return sortMenuData(orderedMenu);
     }
 
-    private static EnumMap<Menu, Integer> sortMenuData(EnumMap<Menu, Integer> orderedMenu) {
-        List<Map.Entry<Menu, Integer>> sortedEntries = orderedMenu.entrySet()
+    private static EnumMap<Menu, List<Integer>> sortMenuData(EnumMap<Menu, List<Integer>> orderedMenu) {
+        List<Map.Entry<Menu, List<Integer>>> sortedEntries = orderedMenu.entrySet()
                 .stream()
                 .sorted(Comparator.comparingInt(entry -> entry.getKey().getType().ordinal()))
                 .toList();
-        EnumMap<Menu, Integer> sortedOrderedMenu = new EnumMap<>(Menu.class);
-        for (Map.Entry<Menu, Integer> entry : sortedEntries) {
+        EnumMap<Menu, List<Integer>> sortedOrderedMenu = new EnumMap<>(Menu.class);
+        for (Map.Entry<Menu, List<Integer>> entry : sortedEntries) {
             sortedOrderedMenu.put(entry.getKey(), entry.getValue());
         }
         return sortedOrderedMenu;
