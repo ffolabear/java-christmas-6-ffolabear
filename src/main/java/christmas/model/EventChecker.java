@@ -1,6 +1,7 @@
 package christmas.model;
 
 import christmas.model.domain.Order;
+import christmas.model.domain.constant.Badge;
 import christmas.model.domain.event.ChristmasEvent;
 import christmas.model.domain.event.EventApplyResponse;
 import christmas.model.domain.event.GiveawayEvent;
@@ -34,4 +35,8 @@ public class EventChecker {
                 .toList();
     }
 
+    public Badge checkBadge(List<EventApplyResponse> eventResponses) {
+        int totalDiscount = eventResponses.stream().mapToInt(EventApplyResponse::getDiscountAmount).sum();
+        return Badge.findHighestBadge(totalDiscount);
+    }
 }
