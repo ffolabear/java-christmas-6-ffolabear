@@ -20,12 +20,12 @@ public class MessageGenerator {
                 orderMenu.entrySet().stream()
                         .map(entry -> VisitDetailMessage.getMenuMessage(entry.getKey(),
                                 entry.getValue().get(ORDER_QUANTITY_INDEX)))
-                        .collect(Collectors.joining());
+                        .collect(Collectors.joining("\n"));
     }
 
     public String totalPriceBeforeDiscount(EnumMap<Menu, List<Integer>> orderMenu) {
         int totalPrice = orderMenu.values().stream().mapToInt(orderDetail -> orderDetail.get(ORDER_PRICE_INDEX)).sum();
-        return generateSingleMessage(VisitDetailMessage.ORIGINAL_TOTAL_PRICE_HEADER, totalPrice);
+        return generateSingleMessage(VisitDetailMessage.ORIGINAL_TOTAL_PRICE_HEADER, VisitDetailMessage.formatMoney(totalPrice));
     }
 
     public String giveaway(List<EventApplyResponse> eventApplyResponses) {
@@ -52,23 +52,23 @@ public class MessageGenerator {
                 eventApplyResponses.stream()
                         .map(response -> VisitDetailMessage.getDiscountMessage(response.getEvent().getName(),
                                 response.discountAmount()))
-                        .collect(Collectors.joining());
+                        .collect(Collectors.joining("\n"));
     }
 
     public String totalDiscount(List<EventApplyResponse> eventApplyResponses) {
         int totalDiscount = eventApplyResponses.stream().mapToInt(EventApplyResponse::getDiscountAmount).sum();
-        return generateSingleMessage(VisitDetailMessage.TOTAL_BENEFIT_HEADER, totalDiscount);
+        return generateSingleMessage(VisitDetailMessage.TOTAL_BENEFIT_HEADER, VisitDetailMessage.formatNegativeMoney(totalDiscount));
     }
 
     public String totalAfterDiscount(int money) {
-        return generateSingleMessage(VisitDetailMessage.DISCOUNT_TOTAL_PRICE_HEADER, money);
+        return generateSingleMessage(VisitDetailMessage.DISCOUNT_TOTAL_PRICE_HEADER, VisitDetailMessage.formatMoney(money));
     }
 
     public String customerBadge(Badge badge) {
-        return VisitDetailMessage.BADGE_HEADER.getHeader(MONTH) + badge.name();
+        return VisitDetailMessage.BADGE_HEADER.getHeader(MONTH) + badge.getName();
     }
 
-    private String generateSingleMessage(VisitDetailMessage header, int money) {
-        return header.getHeader() + VisitDetailMessage.formatMoney(money);
+    private String generateSingleMessage(VisitDetailMessage header, String money) {
+        return header.getHeader() + money;
     }
 }
