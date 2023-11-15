@@ -19,12 +19,16 @@ public enum Badge {
 
     public static Badge findHighestBadge(int totalDiscount) {
         return Stream.of(values())
-                .filter(badge -> badge.qualification < totalDiscount)
+                .filter(badge -> badge.qualification <= totalDiscount)
                 .reduce((none, highest) -> highest)
                 .orElse(Badge.NONE);
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getQualification() {
+        return qualification;
     }
 }
