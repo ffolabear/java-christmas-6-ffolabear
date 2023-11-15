@@ -18,12 +18,11 @@ public class WeekendEvent implements Event, Discount {
     private Order order;
     private final List<LocalDate> eventDates = EventConfig.getInstance().weekendDate();
 
-
     @Override
     public EventApplyResponse applyEvent() {
         countMain(order.getOrderMenu());
         int discountedAmount = applyDiscount();
-        return new EventApplyResponse(EventConstant.WEEKDAY, discountedAmount);
+        return new EventApplyResponse(EventConstant.WEEKEND, discountedAmount);
     }
 
     @Override
@@ -36,9 +35,10 @@ public class WeekendEvent implements Event, Discount {
     }
 
     private void countMain(EnumMap<Menu, List<Integer>> orderMenu) {
-        mainCount = (int) orderMenu.keySet().stream()
-                .filter(menu -> menu.getType() == Type.MAIN)
-                .count();
+        mainCount = orderMenu.entrySet().stream()
+                .filter(entry -> entry.getKey().getType() == Type.MAIN)
+                .map(entry -> entry.getValue().get(0))
+                .reduce(0, Integer::sum);
     }
 
     @Override
