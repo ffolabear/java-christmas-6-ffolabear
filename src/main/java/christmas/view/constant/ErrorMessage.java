@@ -10,7 +10,8 @@ public enum ErrorMessage {
     DUPLICATE_MENU("유효하지 않은 주문입니다."),
     ONLY_BEVERAGE("음료만 주문할 수 없습니다."),
     ORDER_EXCEEDED("메뉴는 한 번에 최대 %d개까지만 주문할 수 있습니다."),
-    MENU_NOT_FOUND("존재하지 않는 매뉴입니다.");
+    MENU_NOT_FOUND("존재하지 않는 매뉴입니다."),
+    GIVEAWAY_NOT_FOUND("증정 매뉴 혜택 내역을 찾을 수 없습니다.");
 
     private final String error;
 

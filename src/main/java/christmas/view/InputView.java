@@ -14,7 +14,6 @@ public class InputView<T, R> {
     }
 
     public InputResult<R> read() {
-        System.out.println("입력하세요.");
         return repeat(inputUtil::read, inputValidator);
     }
 
