@@ -7,44 +7,49 @@ import christmas.view.constant.ErrorMessage;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class MenuValidator implements InputValidator<String, EnumMap<Menu, List<Integer>>> {
 
     @Override
     public EnumMap<Menu, List<Integer>> validate(String input) {
         List<String> rawMenus = Arrays.stream(input.split(",")).toList();
+        validateInputFormat(rawMenus);
         EnumMap<Menu, Integer> orderedMenu = new EnumMap<>(Menu.class);
         for (String rawMenu : rawMenus) {
             String[] splitMenu = validateSingleMenu(rawMenu);
             orderedMenu.put(Menu.getMenuByName(splitMenu[0]), Integer.valueOf(splitMenu[1]));
         }
-        isDuplicateMenuExist(rawMenus, orderedMenu);
-        EnumMap<Menu, List<Integer>> menuData = Mapper.toMenuData(input);
-        isOrderOnlyBeverage(menuData);
+        validateDuplicateMenu(rawMenus, orderedMenu);
+        validateOrderOnlyBeverage(orderedMenu);
         return Mapper.toMenuData(input);
+    }
+
+    private void validateInputFormat(List<String> rawMenus) {
+        if (rawMenus.isEmpty()) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_MENU.getError());
+        }
     }
 
     private String[] validateSingleMenu(String rawMenu) {
         isValidSingleMenu(rawMenu);
         String[] rawMenuDetail = rawMenu.split("-");
+        isQuantityDigit(rawMenuDetail[1]);
         isExistMenu(rawMenuDetail[0]);
         isValidOrderCount(Integer.parseInt(rawMenuDetail[1]));
         return rawMenuDetail;
     }
 
-    private void isDuplicateMenuExist(List<String> rawMenus, EnumMap<Menu, Integer> orderedMenu) {
+    private void validateDuplicateMenu(List<String> rawMenus, EnumMap<Menu, Integer> orderedMenu) {
         if (rawMenus.size() != orderedMenu.size()) {
             throw new IllegalArgumentException(ErrorMessage.DUPLICATE_MENU.getError());
         }
     }
 
-    private void isOrderOnlyBeverage(EnumMap<Menu, List<Integer>> menuData) {
-        Map<Menu, List<Integer>> beverageMenuData = menuData.entrySet().stream()
-                .filter(entry -> entry.getKey().getType() == Type.BEVERAGE)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        if (beverageMenuData.size() == menuData.size()) {
+    private void validateOrderOnlyBeverage(EnumMap<Menu, Integer> orderedMenu) {
+        long beverageCount = orderedMenu.keySet().stream()
+                .filter(menu -> menu.getType() == Type.BEVERAGE)
+                .count();
+        if (beverageCount == orderedMenu.size()) {
             throw new IllegalArgumentException(ErrorMessage.ONLY_BEVERAGE.getError());
         }
     }
@@ -58,6 +63,14 @@ public class MenuValidator implements InputValidator<String, EnumMap<Menu, List<
     private void isExistMenu(String input) {
         if (!Menu.isExistMenu(input)) {
             throw new IllegalArgumentException(ErrorMessage.MENU_NOT_EXIST.getError());
+        }
+    }
+
+    private void isQuantityDigit(String quantity) {
+        try {
+            Integer.parseInt(quantity);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_MENU.getError());
         }
     }
 
