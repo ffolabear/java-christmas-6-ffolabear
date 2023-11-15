@@ -25,8 +25,7 @@ public class MessageGenerator {
 
     public String totalPriceBeforeDiscount(EnumMap<Menu, List<Integer>> orderMenu) {
         int totalPrice = orderMenu.values().stream().mapToInt(orderDetail -> orderDetail.get(ORDER_PRICE_INDEX)).sum();
-        return VisitDetailMessage.ORIGINAL_TOTAL_PRICE_HEADER.getHeader() +
-                VisitDetailMessage.formatMoney(totalPrice);
+        return generateSingleMessage(VisitDetailMessage.ORIGINAL_TOTAL_PRICE_HEADER, totalPrice);
     }
 
     public String giveaway(List<EventApplyResponse> eventApplyResponses) {
@@ -58,16 +57,18 @@ public class MessageGenerator {
 
     public String totalDiscount(List<EventApplyResponse> eventApplyResponses) {
         int totalDiscount = eventApplyResponses.stream().mapToInt(EventApplyResponse::getDiscountAmount).sum();
-        return VisitDetailMessage.TOTAL_BENEFIT_HEADER.getHeader() +
-                VisitDetailMessage.formatNegativeMoney(totalDiscount);
+        return generateSingleMessage(VisitDetailMessage.TOTAL_BENEFIT_HEADER, totalDiscount);
     }
 
     public String totalAfterDiscount(int money) {
-        return VisitDetailMessage.DISCOUNT_TOTAL_PRICE_HEADER.getHeader() +
-                VisitDetailMessage.formatMoney(money);
+        return generateSingleMessage(VisitDetailMessage.DISCOUNT_TOTAL_PRICE_HEADER, money);
     }
 
     public String customerBadge(Badge badge) {
         return VisitDetailMessage.BADGE_HEADER.getHeader(MONTH) + badge.name();
+    }
+
+    private String generateSingleMessage(VisitDetailMessage header, int money) {
+        return header.getHeader() + VisitDetailMessage.formatMoney(money);
     }
 }
