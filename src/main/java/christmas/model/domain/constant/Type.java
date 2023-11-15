@@ -2,9 +2,9 @@ package christmas.model.domain.constant;
 
 public enum Type {
 
-    APPETIZER,
     MAIN,
+    APPETIZER,
     DESSERT,
-    BEVERAGE;
+    BEVERAGE
 
 }
