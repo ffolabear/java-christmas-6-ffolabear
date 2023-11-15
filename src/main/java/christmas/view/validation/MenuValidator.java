@@ -7,8 +7,8 @@ import static christmas.view.constant.InputConstant.ORDER_DELIMITER;
 
 import christmas.model.domain.constant.Menu;
 import christmas.model.domain.constant.Type;
-import christmas.view.mapper.Mapper;
 import christmas.view.constant.ErrorMessage;
+import christmas.view.mapper.Mapper;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
