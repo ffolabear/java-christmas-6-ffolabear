@@ -1,34 +1,47 @@
 package christmas.model.domain;
 
+import christmas.model.domain.constant.Badge;
 import christmas.model.domain.constant.Menu;
 import christmas.view.InputView;
-import christmas.view.Mapper;
 import christmas.view.validation.DateValidator;
 import christmas.view.validation.MenuValidator;
 import christmas.view.validation.UserInputUtil;
+import java.time.LocalDate;
 import java.util.EnumMap;
+import java.util.List;
 
 public class Customer {
 
-    private int visitDate;
-    private EnumMap<Menu, Integer> orderedMenu = new EnumMap<>(Menu.class);
-    private final InputView dateInputView = new InputView(new UserInputUtil(), new DateValidator());
-    private final InputView menuInputView = new InputView(new UserInputUtil(), new MenuValidator());
+    private final InputView<String, LocalDate> dateInputView = new InputView<>(new UserInputUtil(),
+            new DateValidator());
+    private final InputView<String, EnumMap<Menu, List<Integer>>> menuInputView = new InputView<>(new UserInputUtil(),
+            new MenuValidator());
+    private Order order;
+    private Badge badge;
 
-    public void inputVisitDate() {
-        this.visitDate = (int) dateInputView.read().data();
+    public void inputDetail() {
+        LocalDate localDate = inputVisitDate();
+        generateOrder(localDate);
     }
 
-    public void orderMenu() {
-        String data = (String) menuInputView.read().data();
-        this.orderedMenu = Mapper.toMenuData(data);
+    private LocalDate inputVisitDate() {
+        return dateInputView.read().data();
     }
 
-    public int getVisitDate() {
-        return visitDate;
+    private void generateOrder(LocalDate visitDate) {
+        EnumMap<Menu, List<Integer>> orderMenu = menuInputView.read().data();
+        this.order = new Order(visitDate, orderMenu);
     }
 
-    public EnumMap<Menu, Integer> getOrderedMenu() {
-        return orderedMenu;
+    public Order getOrder() {
+        return order;
+    }
+
+    public Badge getBadge() {
+        return badge;
+    }
+
+    public void setBadge(Badge badge) {
+        this.badge = badge;
     }
 }

@@ -22,11 +22,8 @@ public class GiveawayEvent implements Event, Giveaway {
 
     @Override
     public boolean isApplicable(Order order) {
-        if (eventDates.contains(order.getVisitDate()) && isPromotionAvailable()) {
-            this.order = order;
-            return true;
-        }
-        return false;
+        this.order = order;
+        return eventDates.contains(order.getVisitDate()) && isPromotionAvailable();
     }
 
     @Override
