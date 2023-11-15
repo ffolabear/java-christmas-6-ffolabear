@@ -1,4 +1,4 @@
-package christmas.view;
+package christmas.view.mapper;
 
 import static christmas.view.constant.InputConstant.MENU_DELIMITER;
 import static christmas.view.constant.InputConstant.ORDER_DELIMITER;

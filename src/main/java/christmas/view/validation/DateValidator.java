@@ -1,6 +1,6 @@
 package christmas.view.validation;
 
-import christmas.view.Mapper;
+import christmas.view.mapper.Mapper;
 import christmas.view.constant.ErrorMessage;
 import java.time.LocalDate;
 
