@@ -3,8 +3,10 @@ package christmas.model;
 import christmas.model.domain.Customer;
 import christmas.model.domain.Order;
 import christmas.model.domain.constant.Menu;
+import christmas.model.domain.constant.OrderConstant;
 import christmas.model.domain.event.EventApplyResponse;
 import christmas.view.OutputView;
+import christmas.view.constant.SystemMessage;
 import java.util.EnumMap;
 import java.util.List;
 
@@ -16,6 +18,7 @@ public class EventService {
 
     public void inputCustomerDetail() {
         this.customer = new Customer();
+        printWelcomeHeader();
         customer.inputDetail();
     }
 
@@ -35,6 +38,10 @@ public class EventService {
         printTotalDiscount();
         printTotalAfterDiscount();
         printBadge();
+    }
+
+    private void printWelcomeHeader() {
+        outputView.printSystemMessage(SystemMessage.WELCOME, OrderConstant.DECEMBER.getValue());
     }
 
     private void printEventHeader() {
