@@ -4,6 +4,7 @@ import christmas.model.domain.constant.Badge;
 import christmas.model.domain.constant.Menu;
 import christmas.model.domain.event.EventApplyResponse;
 import christmas.model.domain.event.constant.EventConstant;
+import christmas.view.constant.SystemMessage;
 import christmas.view.constant.VisitDetailMessage;
 import java.util.EnumMap;
 import java.util.List;
@@ -14,6 +15,10 @@ public class MessageGenerator {
     private static final int MONTH = 12;
     private static final int ORDER_QUANTITY_INDEX = 0;
     private static final int ORDER_PRICE_INDEX = 1;
+
+    public String eventHeader(int visitDate) {
+        return SystemMessage.EVENT_HEADER.getMessage(MONTH, visitDate);
+    }
 
     public String orderedMenu(EnumMap<Menu, List<Integer>> orderMenu) {
         return VisitDetailMessage.ORDER_MENU_DETAIL_HEADER.getHeader() +

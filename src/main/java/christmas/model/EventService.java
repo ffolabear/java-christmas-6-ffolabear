@@ -27,6 +27,7 @@ public class EventService {
     }
 
     public void printAppliedEvent() {
+        printEventHeader();
         printOrderMenu(customer.getOrder().getOrderMenu());
         printTotalBeforeDiscount(customer.getOrder().getOrderMenu());
         printGiveaway();
@@ -34,6 +35,10 @@ public class EventService {
         printTotalDiscount();
         printTotalAfterDiscount();
         printBadge();
+    }
+
+    private void printEventHeader() {
+        outputView.printEventHeader(customer.getOrder().getVisitDate().getDayOfMonth());
     }
 
     private void printOrderMenu(EnumMap<Menu, List<Integer>> orderMenu) {
