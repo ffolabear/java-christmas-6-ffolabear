@@ -13,6 +13,7 @@ import java.util.List;
 
 public class WeekendEvent implements Event, Discount {
 
+    private static final int ORDER_QUANTITY_INDEX = 0;
     public static final int WEEKEND_DISCOUNT = 2_023;
     private int mainCount;
     private Order order;
@@ -37,7 +38,7 @@ public class WeekendEvent implements Event, Discount {
     private void countMain(EnumMap<Menu, List<Integer>> orderMenu) {
         mainCount = orderMenu.entrySet().stream()
                 .filter(entry -> entry.getKey().getType() == Type.MAIN)
-                .map(entry -> entry.getValue().get(0))
+                .map(entry -> entry.getValue().get(ORDER_QUANTITY_INDEX))
                 .reduce(0, Integer::sum);
     }
 

@@ -11,15 +11,20 @@ import java.util.stream.Collectors;
 
 public class MessageGenerator {
 
+    private static final int MONTH = 12;
+    private static final int ORDER_QUANTITY_INDEX = 0;
+    private static final int ORDER_PRICE_INDEX = 1;
+
     public String orderedMenu(EnumMap<Menu, List<Integer>> orderMenu) {
         return VisitDetailMessage.ORDER_MENU_DETAIL_HEADER.getHeader() +
                 orderMenu.entrySet().stream()
-                        .map(entry -> VisitDetailMessage.getMenuMessage(entry.getKey(), entry.getValue().get(0)))
+                        .map(entry -> VisitDetailMessage.getMenuMessage(entry.getKey(),
+                                entry.getValue().get(ORDER_QUANTITY_INDEX)))
                         .collect(Collectors.joining());
     }
 
     public String totalPriceBeforeDiscount(EnumMap<Menu, List<Integer>> orderMenu) {
-        int totalPrice = orderMenu.values().stream().mapToInt(detail -> detail.get(1)).sum();
+        int totalPrice = orderMenu.values().stream().mapToInt(orderDetail -> orderDetail.get(ORDER_PRICE_INDEX)).sum();
         return VisitDetailMessage.ORIGINAL_TOTAL_PRICE_HEADER.getHeader() +
                 VisitDetailMessage.formatMoney(totalPrice);
     }
@@ -63,6 +68,6 @@ public class MessageGenerator {
     }
 
     public String customerBadge(Badge badge) {
-        return VisitDetailMessage.BADGE_HEADER.getHeader(12) + badge.name();
+        return VisitDetailMessage.BADGE_HEADER.getHeader(MONTH) + badge.name();
     }
 }

@@ -1,5 +1,10 @@
 package christmas.view.validation;
 
+import static christmas.model.domain.constant.OrderConstant.MAX_ORDER_LIMIT;
+import static christmas.model.domain.constant.OrderConstant.MIN_ORDER_LIMIT;
+import static christmas.view.constant.InputConstant.MENU_DELIMITER;
+import static christmas.view.constant.InputConstant.ORDER_DELIMITER;
+
 import christmas.model.domain.constant.Menu;
 import christmas.model.domain.constant.Type;
 import christmas.view.Mapper;
@@ -12,7 +17,7 @@ public class MenuValidator implements InputValidator<String, EnumMap<Menu, List<
 
     @Override
     public EnumMap<Menu, List<Integer>> validate(String input) {
-        List<String> rawMenus = Arrays.stream(input.split(",")).toList();
+        List<String> rawMenus = Arrays.stream(input.split(ORDER_DELIMITER.getValue())).toList();
         validateInputFormat(rawMenus);
         EnumMap<Menu, Integer> orderedMenu = new EnumMap<>(Menu.class);
         for (String rawMenu : rawMenus) {
@@ -32,7 +37,7 @@ public class MenuValidator implements InputValidator<String, EnumMap<Menu, List<
 
     private String[] validateSingleMenu(String rawMenu) {
         isValidSingleMenu(rawMenu);
-        String[] rawMenuDetail = rawMenu.split("-");
+        String[] rawMenuDetail = rawMenu.split(MENU_DELIMITER.getValue());
         isQuantityDigit(rawMenuDetail[1]);
         isExistMenu(rawMenuDetail[0]);
         isValidOrderCount(Integer.parseInt(rawMenuDetail[1]));
@@ -55,7 +60,7 @@ public class MenuValidator implements InputValidator<String, EnumMap<Menu, List<
     }
 
     private void isValidSingleMenu(String rawMenu) {
-        if (rawMenu.split("-").length != 2) {
+        if (rawMenu.split(MENU_DELIMITER.getValue()).length != 2) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_MENU.getError());
         }
     }
@@ -75,7 +80,7 @@ public class MenuValidator implements InputValidator<String, EnumMap<Menu, List<
     }
 
     private void isValidOrderCount(int orderCount) {
-        if (orderCount > 20) {
+        if (orderCount < MIN_ORDER_LIMIT.getValue() || MAX_ORDER_LIMIT.getValue() < orderCount) {
             throw new IllegalArgumentException(ErrorMessage.ORDER_EXCEEDED.getError());
         }
     }

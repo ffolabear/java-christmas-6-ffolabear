@@ -6,11 +6,8 @@ import java.time.LocalDate;
 
 public class DateValidator implements InputValidator<String, LocalDate> {
 
-    private static final int YEAR = 2023;
-    private static final int MONTH = 12;
-
-    private final int START_DATE = 1;
-    private final int END_DATE = 31;
+    private static final int START_DATE = 1;
+    private static final int END_DATE = 31;
 
     @Override
     public LocalDate validate(String input) {
