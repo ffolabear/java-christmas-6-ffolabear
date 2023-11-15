@@ -81,7 +81,7 @@ public class MenuValidator implements InputValidator<String, EnumMap<Menu, List<
 
     private void isValidOrderCount(int orderCount) {
         if (orderCount < MIN_ORDER_LIMIT.getValue() || MAX_ORDER_LIMIT.getValue() < orderCount) {
-            throw new IllegalArgumentException(ErrorMessage.ORDER_EXCEEDED.getError());
+            throw new IllegalArgumentException(ErrorMessage.ORDER_EXCEEDED.getError(MAX_ORDER_LIMIT.getValue()));
         }
     }
 }
