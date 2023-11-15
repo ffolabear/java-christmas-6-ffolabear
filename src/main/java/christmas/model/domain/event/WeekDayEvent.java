@@ -35,9 +35,10 @@ public class WeekDayEvent implements Event, Discount {
     }
 
     private void countDessert(EnumMap<Menu, List<Integer>> orderMenu) {
-        dessertCount = (int) orderMenu.keySet().stream()
-                .filter(menu -> menu.getType() == Type.DESSERT)
-                .count();
+        dessertCount = orderMenu.entrySet().stream()
+                .filter(entry -> entry.getKey().getType() == Type.DESSERT)
+                .map(entry -> entry.getValue().get(0))
+                .reduce(0, Integer::sum);
     }
 
     @Override
