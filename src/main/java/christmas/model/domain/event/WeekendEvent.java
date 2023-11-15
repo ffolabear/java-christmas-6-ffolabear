@@ -18,12 +18,11 @@ public class WeekendEvent implements Event, Discount {
     private Order order;
     private final List<LocalDate> eventDates = EventConfig.getInstance().weekendDate();
 
-
     @Override
     public EventApplyResponse applyEvent() {
         countMain(order.getOrderMenu());
         int discountedAmount = applyDiscount();
-        return new EventApplyResponse(EventConstant.WEEKDAY, discountedAmount);
+        return new EventApplyResponse(EventConstant.WEEKEND, discountedAmount);
     }
 
     @Override
