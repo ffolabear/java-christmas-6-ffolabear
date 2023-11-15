@@ -5,17 +5,17 @@ import java.text.DecimalFormat;
 
 public enum VisitDetailMessage {
 
-    START_BRACKET("<"),
+    START_BRACKET("\n<"),
     END_BRACKET(">\n"),
     ORDER_MENU_DETAIL_HEADER("주문 메뉴"),
     ORIGINAL_TOTAL_PRICE_HEADER("할인 전 총주문 금액"),
     GIVEAWAY_HEADER("증정 메뉴"),
     BENEFIT_DETAILS_HEADER("혜택 내역"),
-    NONE("없음\n"),
+    NONE("없음"),
     TOTAL_BENEFIT_HEADER("총혜택 금액"),
     DISCOUNT_TOTAL_PRICE_HEADER("할인 후 예상 결제 금액"),
     BADGE_HEADER("%d월 이벤트 배지"),
-    MENU_MESSAGE("%s %d개\n"),
+    MENU_MESSAGE("%s %d개"),
     DISCOUNT_MESSAGE("%s: %s");
 
     private final String message;
@@ -36,10 +36,6 @@ public enum VisitDetailMessage {
         return message;
     }
 
-    public String getMessage(int month) {
-        return String.format(message, month);
-    }
-
     public static String getDiscountMessage(String discountName, int money) {
         return String.format(DISCOUNT_MESSAGE.message, discountName, formatNegativeMoney(money));
     }
@@ -55,7 +51,6 @@ public enum VisitDetailMessage {
 
     public static String formatNegativeMoney(int money) {
         DecimalFormat decimalFormat = new DecimalFormat("-###,###원");
-        String formattedMoney = decimalFormat.format(money);
-        return formattedMoney + "\n";
+        return decimalFormat.format(money);
     }
 }

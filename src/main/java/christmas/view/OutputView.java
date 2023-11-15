@@ -19,6 +19,10 @@ public class OutputView {
         System.out.println(systemMessage.getMessage(month));
     }
 
+    public void printEventHeader(int visitDate) {
+        System.out.println(messageGenerator.eventHeader(visitDate));
+    }
+
     public void printOrderMenu(EnumMap<Menu, List<Integer>> orderMenu) {
         System.out.println(messageGenerator.orderedMenu(orderMenu));
     }
