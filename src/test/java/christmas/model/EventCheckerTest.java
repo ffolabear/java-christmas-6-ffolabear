@@ -26,7 +26,7 @@ class EventCheckerTest {
     @DisplayName("평일이벤트, 크리스마스 디데이 이벤트만 적용되는지 테스트")
     @Test
     void checkWeekdayChristmas() {
-        Order order = createWeekdayChristmasOrder();
+        Order order = generateWeekdayChristmasOrder();
         List<EventApplyResponse> eventApplyResponses = eventChecker.checkOrder(order);
         List<EventConstant> expectedConstants = Arrays.asList(EventConstant.WEEKDAY, EventConstant.CHRISTMAS);
         List<EventConstant> actualConstants = eventApplyResponses.stream().map(EventApplyResponse::getEvent).toList();
@@ -36,7 +36,7 @@ class EventCheckerTest {
     @DisplayName("평일이벤트, 스페셜 이벤트, 크리스마스 디데이 이벤트, 증정 이벤트 적용되는지 테스트")
     @Test
     void checkWeekdayChristmasSpecial() {
-        Order order = createWeekdayChristmasSpecialOrder();
+        Order order = generateWeekdayChristmasSpecialOrder();
         List<EventApplyResponse> eventApplyResponses = eventChecker.checkOrder(order);
         List<EventConstant> expectedConstants = Arrays.asList(EventConstant.WEEKDAY, EventConstant.CHRISTMAS,
                 EventConstant.SPECIAL, EventConstant.GIVEAWAY);
@@ -44,7 +44,7 @@ class EventCheckerTest {
         assertThat(actualConstants).containsExactlyInAnyOrderElementsOf(expectedConstants);
     }
 
-    Order createWeekdayChristmasOrder() {
+    Order generateWeekdayChristmasOrder() {
         EnumMap<Menu, List<Integer>> orderMenu = new EnumMap<>(Menu.class);
         orderMenu.put(BBQ_RIBS, Arrays.asList(2, BBQ_RIBS.getPrice() * 2));
         orderMenu.put(MUSHROOM_SOUP, Arrays.asList(1, MUSHROOM_SOUP.getPrice()));
@@ -53,7 +53,7 @@ class EventCheckerTest {
         return new Order(visitDate, orderMenu);
     }
 
-    Order createWeekdayChristmasSpecialOrder() {
+    Order generateWeekdayChristmasSpecialOrder() {
         EnumMap<Menu, List<Integer>> orderMenu = new EnumMap<>(Menu.class);
         orderMenu.put(T_BONE_STEAK, Arrays.asList(2, T_BONE_STEAK.getPrice() * 2));
         orderMenu.put(CHRISTMAS_PASTA, Arrays.asList(1, CHRISTMAS_PASTA.getPrice()));
