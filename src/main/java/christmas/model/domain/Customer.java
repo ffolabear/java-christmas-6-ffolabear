@@ -2,6 +2,7 @@ package christmas.model.domain;
 
 import christmas.model.domain.constant.Badge;
 import christmas.model.domain.constant.Menu;
+import christmas.model.domain.constant.OrderConstant;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 import christmas.view.constant.SystemMessage;
@@ -23,7 +24,7 @@ public class Customer {
 
     public void inputDetail() {
         OutputView outputView = new OutputView();
-        outputView.printSystemMessage(SystemMessage.INPUT_DATE, 12);
+        outputView.printSystemMessage(SystemMessage.INPUT_DATE, OrderConstant.DECEMBER.getValue());
         LocalDate localDate = inputVisitDate();
         outputView.printSystemMessage(SystemMessage.INPUT_MENU);
         generateOrder(localDate);
