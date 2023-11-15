@@ -23,7 +23,7 @@ public class ChristmasEvent implements Event, Discount {
     @Override
     public boolean isApplicable(Order order) {
         LocalDate visitDate = order.getVisitDate();
-        if (visitDate.getDayOfMonth() <= EventConfig.CHRISTMAS) {
+        if (visitDate.getDayOfMonth() <= EventConfig.CHRISTMAS.getDayOfMonth()) {
             updateDiscountAmount(visitDate);
             return true;
         }
@@ -36,7 +36,7 @@ public class ChristmasEvent implements Event, Discount {
     }
 
     private void updateDiscountAmount(LocalDate visitDate) {
-        int daysUntilChristmas = EventConfig.CHRISTMAS - visitDate.getDayOfMonth();
+        int daysUntilChristmas = EventConfig.CHRISTMAS.getDayOfMonth() - visitDate.getDayOfMonth();
         currentChristmasDiscount = CHRISTMAS_DISCOUNT_START - daysUntilChristmas * CHRISTMAS_DISCOUNT_INCREMENT;
     }
 }

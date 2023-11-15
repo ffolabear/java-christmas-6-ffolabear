@@ -12,8 +12,7 @@ public class EventConfig {
     public static final int YEAR = 2023;
     public static final int MONTH = 12;
     public static final int START_DATE = 1;
-    public static final int END_DATE = 31;
-    public static final int CHRISTMAS = 25;
+    public static final LocalDate CHRISTMAS = LocalDate.of(YEAR, MONTH, 25);
     private static List<LocalDate> dates;
 
     private static final EventConfig instance = new EventConfig();
@@ -68,11 +67,7 @@ public class EventConfig {
     private Predicate<LocalDate> isSpecialDay() {
         return date -> date.getMonthValue() == MONTH &&
                 date.getDayOfWeek() == DayOfWeek.SUNDAY ||
-                date.getDayOfMonth() == CHRISTMAS;
-    }
-
-    public LocalDate christmasDate() {
-        return LocalDate.of(YEAR, MONTH, CHRISTMAS);
+                date.getDayOfMonth() == CHRISTMAS.getDayOfMonth();
     }
 
 }

@@ -1,4 +1,7 @@
-package christmas.view;
+package christmas.view.mapper;
+
+import static christmas.view.constant.InputConstant.MENU_DELIMITER;
+import static christmas.view.constant.InputConstant.ORDER_DELIMITER;
 
 import christmas.model.domain.constant.Menu;
 import java.time.LocalDate;
@@ -10,6 +13,9 @@ import java.util.Map;
 
 public class Mapper {
 
+    private static final int ORDER_QUANTITY_INDEX = 0;
+    private static final int ORDER_PRICE_INDEX = 1;
+
     private static final int YEAR = 2023;
     private static final int MONTH = 12;
 
@@ -18,13 +24,14 @@ public class Mapper {
     }
 
     public static EnumMap<Menu, List<Integer>> toMenuData(String menuInput) {
-        List<String> rawMenus = Arrays.stream(menuInput.split(",")).toList();
+        List<String> rawMenus = Arrays.stream(menuInput.split(ORDER_DELIMITER.getValue())).toList();
         EnumMap<Menu, List<Integer>> orderedMenu = new EnumMap<>(Menu.class);
         for (String rawMenu : rawMenus) {
-            String[] splitMenu = rawMenu.split("-");
-            Menu menu = Menu.getMenuByName(splitMenu[0]);
-            int quantity = Integer.parseInt(splitMenu[1]);
-            orderedMenu.put(Menu.getMenuByName(splitMenu[0]), Arrays.asList(quantity, quantity * menu.getPrice()));
+            String[] splitMenu = rawMenu.split(MENU_DELIMITER.getValue());
+            Menu menu = Menu.getMenuByName(splitMenu[ORDER_QUANTITY_INDEX]);
+            int quantity = Integer.parseInt(splitMenu[ORDER_PRICE_INDEX]);
+            orderedMenu.put(Menu.getMenuByName(splitMenu[ORDER_QUANTITY_INDEX]),
+                    Arrays.asList(quantity, quantity * menu.getPrice()));
         }
         return sortMenuData(orderedMenu);
     }

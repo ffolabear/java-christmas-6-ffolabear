@@ -13,6 +13,7 @@ import java.util.List;
 
 public class WeekDayEvent implements Event, Discount {
 
+    private static final int ORDER_QUANTITY_INDEX = 0;
     public static final int WEEKDAY_DISCOUNT = 2_023;
     private int dessertCount;
     private Order order;
@@ -37,7 +38,7 @@ public class WeekDayEvent implements Event, Discount {
     private void countDessert(EnumMap<Menu, List<Integer>> orderMenu) {
         dessertCount = orderMenu.entrySet().stream()
                 .filter(entry -> entry.getKey().getType() == Type.DESSERT)
-                .map(entry -> entry.getValue().get(0))
+                .map(entry -> entry.getValue().get(ORDER_QUANTITY_INDEX))
                 .reduce(0, Integer::sum);
     }
 

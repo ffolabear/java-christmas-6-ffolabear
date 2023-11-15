@@ -21,7 +21,7 @@ public enum SystemMessage {
         return String.format(message, month);
     }
 
-    public String getMessage(int month ,int date) {
+    public String getMessage(int month, int date) {
         return String.format(message, month, date);
     }
 }
