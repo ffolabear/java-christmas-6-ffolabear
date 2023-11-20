@@ -1,6 +1,6 @@
 package christmas.model.domain.constant;
 
-public enum Type {
+public enum MenuType {
 
     APPETIZER,
     MAIN,

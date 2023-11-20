@@ -15,12 +15,15 @@ import java.util.List;
 
 public class Customer {
 
-    private final InputView<String, LocalDate> dateInputView = new InputView<>(new UserInputUtil(),
-            new DateValidator());
-    private final InputView<String, EnumMap<Menu, List<Integer>>> menuInputView = new InputView<>(new UserInputUtil(),
-            new MenuValidator());
+    private final InputView<String, LocalDate> dateInputView;
+    private final InputView<String, EnumMap<Menu, List<Integer>>> menuInputView;
     private Order order;
     private Badge badge;
+
+    public Customer() {
+        dateInputView = new InputView<>(new UserInputUtil(), new DateValidator());
+        menuInputView = new InputView<>(new UserInputUtil(), new MenuValidator());
+    }
 
     public void inputDetail() {
         OutputView outputView = new OutputView();

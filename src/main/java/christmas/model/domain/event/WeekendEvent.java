@@ -2,7 +2,7 @@ package christmas.model.domain.event;
 
 import christmas.model.domain.Order;
 import christmas.model.domain.constant.Menu;
-import christmas.model.domain.constant.Type;
+import christmas.model.domain.constant.MenuType;
 import christmas.model.domain.event.config.EventConfig;
 import christmas.model.domain.event.constant.EventConstant;
 import christmas.model.domain.event.eventStructure.Discount;
@@ -37,7 +37,7 @@ public class WeekendEvent implements Event, Discount {
 
     private void countMain(EnumMap<Menu, List<Integer>> orderMenu) {
         mainCount = orderMenu.entrySet().stream()
-                .filter(entry -> entry.getKey().getType() == Type.MAIN)
+                .filter(entry -> entry.getKey().getType() == MenuType.MAIN)
                 .map(entry -> entry.getValue().get(ORDER_QUANTITY_INDEX))
                 .reduce(0, Integer::sum);
     }

@@ -24,7 +24,7 @@ public class EventService {
 
     public void checkOrder() {
         Order order = customer.getOrder();
-        EventChecker eventChecker = new EventChecker();
+        EventChecker eventChecker = new EventChecker(order.getVisitDate());
         this.eventApplyResponses = eventChecker.checkOrder(order);
         customer.setBadge(eventChecker.checkBadge(eventApplyResponses));
     }

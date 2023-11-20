@@ -6,7 +6,7 @@ import static christmas.view.constant.InputConstant.MENU_DELIMITER;
 import static christmas.view.constant.InputConstant.ORDER_DELIMITER;
 
 import christmas.model.domain.constant.Menu;
-import christmas.model.domain.constant.Type;
+import christmas.model.domain.constant.MenuType;
 import christmas.view.constant.ErrorMessage;
 import christmas.view.mapper.Mapper;
 import java.util.Arrays;
@@ -52,7 +52,7 @@ public class MenuValidator implements InputValidator<String, EnumMap<Menu, List<
 
     private void validateOrderOnlyBeverage(EnumMap<Menu, Integer> orderedMenu) {
         long beverageCount = orderedMenu.keySet().stream()
-                .filter(menu -> menu.getType() == Type.BEVERAGE)
+                .filter(menu -> menu.getType() == MenuType.BEVERAGE)
                 .count();
         if (beverageCount == orderedMenu.size()) {
             throw new IllegalArgumentException(ErrorMessage.ONLY_BEVERAGE.getError());

@@ -23,9 +23,9 @@ import org.junit.jupiter.api.Test;
 
 class MessageGeneratorTest extends NsTest {
 
-    static final EventChecker eventChecker = new EventChecker();
-    static final MessageGenerator messageGenerator = new MessageGenerator();
+    private static final MessageGenerator messageGenerator = new MessageGenerator();
     private Order order;
+    private EventChecker eventChecker;
 
     @BeforeEach
     void generateOrder() {
@@ -36,6 +36,7 @@ class MessageGeneratorTest extends NsTest {
         orderMenu.put(ZERO_COLA, Arrays.asList(3, ZERO_COLA.getPrice() * 3));
         LocalDate visitDate = LocalDate.of(2023, 12, 5);
         this.order = new Order(visitDate, orderMenu);
+        this.eventChecker = new EventChecker(order.getVisitDate());
     }
 
     @DisplayName("안내 문구 출력 테스트")
@@ -84,7 +85,7 @@ class MessageGeneratorTest extends NsTest {
         String totalDiscountMessage = messageGenerator.totalDiscount(eventApplyResponses);
         assertThat(totalDiscountMessage).isEqualTo(
                 "\n<총혜택 금액>\n"
-                + "-5,446원");
+                        + "-5,446원");
     }
 
 

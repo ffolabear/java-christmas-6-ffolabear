@@ -4,7 +4,11 @@ import christmas.model.EventService;
 
 public class EventController {
 
-    private final EventService eventService = new EventService();
+    private final EventService eventService;
+
+    public EventController() {
+        eventService = new EventService();
+    }
 
     public void startService() {
         eventService.inputCustomerDetail();
