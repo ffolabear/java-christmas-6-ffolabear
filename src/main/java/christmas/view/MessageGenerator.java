@@ -30,7 +30,8 @@ public class MessageGenerator {
 
     public String totalPriceBeforeDiscount(EnumMap<Menu, List<Integer>> orderMenu) {
         int totalPrice = orderMenu.values().stream().mapToInt(orderDetail -> orderDetail.get(ORDER_PRICE_INDEX)).sum();
-        return generateSingleMessage(VisitDetailMessage.ORIGINAL_TOTAL_PRICE_HEADER, VisitDetailMessage.formatMoney(totalPrice));
+        return generateSingleMessage(VisitDetailMessage.ORIGINAL_TOTAL_PRICE_HEADER,
+                VisitDetailMessage.formatPositiveMoney(totalPrice));
     }
 
     public String giveaway(List<EventApplyResponse> eventApplyResponses) {
@@ -62,11 +63,17 @@ public class MessageGenerator {
 
     public String totalDiscount(List<EventApplyResponse> eventApplyResponses) {
         int totalDiscount = eventApplyResponses.stream().mapToInt(EventApplyResponse::getDiscountAmount).sum();
-        return generateSingleMessage(VisitDetailMessage.TOTAL_BENEFIT_HEADER, VisitDetailMessage.formatNegativeMoney(totalDiscount));
+        if (totalDiscount == 0) {
+            return generateSingleMessage(VisitDetailMessage.TOTAL_BENEFIT_HEADER,
+                    VisitDetailMessage.formatPositiveMoney(totalDiscount));
+        }
+        return generateSingleMessage(VisitDetailMessage.TOTAL_BENEFIT_HEADER,
+                VisitDetailMessage.formatNegativeMoney(totalDiscount));
     }
 
     public String totalAfterDiscount(int money) {
-        return generateSingleMessage(VisitDetailMessage.DISCOUNT_TOTAL_PRICE_HEADER, VisitDetailMessage.formatMoney(money));
+        return generateSingleMessage(VisitDetailMessage.DISCOUNT_TOTAL_PRICE_HEADER,
+                VisitDetailMessage.formatPositiveMoney(money));
     }
 
     public String customerBadge(Badge badge) {
