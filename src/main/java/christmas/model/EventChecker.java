@@ -21,8 +21,9 @@ public class EventChecker {
     private static final int EVENT_THRESHOLD = 10_000;
 
     public EventChecker(LocalDate localDate) {
-        this.discountEvents = Arrays.asList(
-                new WeekDayEvent(), new WeekendEvent(), new GiveawayEvent(), new ChristmasEvent(localDate), new SpecialEvent());
+        this.discountEvents = List.of(
+                new WeekDayEvent(), new WeekendEvent(), new GiveawayEvent(), new ChristmasEvent(localDate),
+                new SpecialEvent());
     }
 
     public List<EventApplyResponse> checkOrder(Order order) {
