@@ -5,6 +5,7 @@ import christmas.model.domain.Order;
 import christmas.model.domain.constant.Menu;
 import christmas.model.domain.constant.OrderConstant;
 import christmas.model.domain.event.EventApplyResponse;
+import christmas.model.domain.event.constant.EventConstant;
 import christmas.view.OutputView;
 import christmas.view.constant.SystemMessage;
 import java.util.EnumMap;
@@ -36,8 +37,16 @@ public class EventService {
         printGiveaway();
         printDiscountDetail();
         printTotalDiscount();
-        printTotalAfterDiscount();
+        printTotalAfterDiscount(calculateAfterDiscount());
         printBadge();
+    }
+
+    private int calculateAfterDiscount() {
+        int total = customer.getOrder().getTotalPrice();
+        return total - eventApplyResponses.stream()
+                .filter(eventApplyResponse -> eventApplyResponse.getEvent() != EventConstant.GIVEAWAY)
+                .mapToInt(EventApplyResponse::getDiscountAmount)
+                .sum();
     }
 
     private void printWelcomeHeader() {
@@ -68,8 +77,8 @@ public class EventService {
         outputView.printTotalDiscount(eventApplyResponses);
     }
 
-    private void printTotalAfterDiscount() {
-        outputView.printTotalAfterDiscount(customer.getOrder().getTotalPrice());
+    private void printTotalAfterDiscount(int total) {
+        outputView.printTotalAfterDiscount(total);
     }
 
     private void printBadge() {
