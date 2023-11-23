@@ -21,12 +21,11 @@ import org.junit.jupiter.api.Test;
 
 class EventCheckerTest {
 
-    EventChecker eventChecker = new EventChecker();
-
     @DisplayName("평일이벤트, 크리스마스 디데이 이벤트만 적용되는지 테스트")
     @Test
     void checkWeekdayChristmas() {
         Order order = generateWeekdayChristmasOrder();
+        EventChecker eventChecker = new EventChecker(order.getVisitDate());
         List<EventApplyResponse> eventApplyResponses = eventChecker.checkOrder(order);
         List<EventConstant> expectedConstants = Arrays.asList(EventConstant.WEEKDAY, EventConstant.CHRISTMAS);
         List<EventConstant> actualConstants = eventApplyResponses.stream().map(EventApplyResponse::getEvent).toList();
@@ -37,6 +36,7 @@ class EventCheckerTest {
     @Test
     void checkWeekdayChristmasSpecial() {
         Order order = generateWeekdayChristmasSpecialOrder();
+        EventChecker eventChecker = new EventChecker(order.getVisitDate());
         List<EventApplyResponse> eventApplyResponses = eventChecker.checkOrder(order);
         List<EventConstant> expectedConstants = Arrays.asList(EventConstant.WEEKDAY, EventConstant.CHRISTMAS,
                 EventConstant.SPECIAL, EventConstant.GIVEAWAY);

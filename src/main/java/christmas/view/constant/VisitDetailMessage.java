@@ -44,7 +44,7 @@ public enum VisitDetailMessage {
         return String.format(MENU_MESSAGE.message, menu.getName(), quantity);
     }
 
-    public static String formatMoney(int money) {
+    public static String formatPositiveMoney(int money) {
         DecimalFormat decimalFormat = new DecimalFormat("###,###원");
         return decimalFormat.format(money);
     }

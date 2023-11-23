@@ -5,15 +5,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class EventConfig {
 
     public static final int YEAR = 2023;
     public static final int MONTH = 12;
     public static final int START_DATE = 1;
+    public static final int END_DATE = 31;
     public static final LocalDate CHRISTMAS = LocalDate.of(YEAR, MONTH, 25);
-    private static List<LocalDate> dates;
+    private static List<LocalDate> decemberDate;
 
     private static final EventConfig instance = new EventConfig();
 
@@ -26,18 +26,16 @@ public class EventConfig {
     }
 
     private static void generateDates() {
-        dates = new ArrayList<>();
-        LocalDate date = LocalDate.of(YEAR, MONTH, START_DATE);
-        while (date.getMonthValue() == MONTH) {
-            dates.add(date);
-            date = date.plusDays(1);
-        }
+        decemberDate = new ArrayList<>();
+        LocalDate startDate = LocalDate.of(YEAR, MONTH, START_DATE);
+        LocalDate endDate = LocalDate.of(YEAR, MONTH, END_DATE);
+        decemberDate = startDate.datesUntil(endDate).toList();
     }
 
     public List<LocalDate> weekdayDate() {
-        return dates.stream()
+        return decemberDate.stream()
                 .filter(isWeekDay())
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private Predicate<LocalDate> isWeekDay() {
@@ -47,9 +45,9 @@ public class EventConfig {
     }
 
     public List<LocalDate> weekendDate() {
-        return dates.stream()
+        return decemberDate.stream()
                 .filter(isWeekendDay())
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private Predicate<LocalDate> isWeekendDay() {
@@ -59,9 +57,9 @@ public class EventConfig {
     }
 
     public List<LocalDate> specialDate() {
-        return dates.stream()
+        return decemberDate.stream()
                 .filter(isSpecialDay())
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private Predicate<LocalDate> isSpecialDay() {

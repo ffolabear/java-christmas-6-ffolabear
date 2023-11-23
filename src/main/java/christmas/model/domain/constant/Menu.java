@@ -1,9 +1,9 @@
 package christmas.model.domain.constant;
 
-import static christmas.model.domain.constant.Type.APPETIZER;
-import static christmas.model.domain.constant.Type.BEVERAGE;
-import static christmas.model.domain.constant.Type.DESSERT;
-import static christmas.model.domain.constant.Type.MAIN;
+import static christmas.model.domain.constant.MenuType.APPETIZER;
+import static christmas.model.domain.constant.MenuType.BEVERAGE;
+import static christmas.model.domain.constant.MenuType.DESSERT;
+import static christmas.model.domain.constant.MenuType.MAIN;
 
 import christmas.model.exception.MenuNotFindException;
 import christmas.view.constant.ErrorMessage;
@@ -27,9 +27,9 @@ public enum Menu {
 
     private final String name;
     private final int price;
-    private final Type type;
+    private final MenuType type;
 
-    Menu(String name, int price, Type type) {
+    Menu(String name, int price, MenuType type) {
         this.name = name;
         this.price = price;
         this.type = type;
@@ -55,7 +55,7 @@ public enum Menu {
         return price;
     }
 
-    public Type getType() {
+    public MenuType getType() {
         return type;
     }
 }

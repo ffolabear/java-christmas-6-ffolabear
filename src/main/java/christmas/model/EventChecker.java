@@ -9,8 +9,9 @@ import christmas.model.domain.event.SpecialEvent;
 import christmas.model.domain.event.WeekDayEvent;
 import christmas.model.domain.event.WeekendEvent;
 import christmas.model.domain.event.eventStructure.Event;
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -19,14 +20,15 @@ public class EventChecker {
     private final List<Event> discountEvents;
     private static final int EVENT_THRESHOLD = 10_000;
 
-    public EventChecker() {
-        this.discountEvents = Arrays.asList(
-                new WeekDayEvent(), new WeekendEvent(), new GiveawayEvent(), new ChristmasEvent(), new SpecialEvent());
+    public EventChecker(LocalDate localDate) {
+        this.discountEvents = List.of(
+                new WeekDayEvent(), new WeekendEvent(), new GiveawayEvent(), new ChristmasEvent(localDate),
+                new SpecialEvent());
     }
 
     public List<EventApplyResponse> checkOrder(Order order) {
         if (order.getTotalPrice() < EVENT_THRESHOLD) {
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
         return discountEvents.stream()
                 .filter(event -> event.isApplicable(order))
